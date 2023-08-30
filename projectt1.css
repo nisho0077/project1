@@ -1,0 +1,28 @@
+body {
+  font-size: 62.2%;
+}
+.slideshow-container {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  align-items: center;
+  background-color: royalblue;
+}
+.slideshow-elements {
+}
+.slideshow-element {
+  text-align: center;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  position: absolute;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.6s;
+}
+.slideshow-element i,
+h2 {
+  font-size: 4rem;
+}
+.slideshow-element.current {
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 0.6s;
+}
