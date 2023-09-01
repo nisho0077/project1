@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js"
+      integrity="sha512-aoTNnqZcT8B4AmeCFmiSnDlc4Nj/KPaZyB5G7JnOnUEkdNpCZs1LCankiYi01sLTyWy+m2P+W4XM+BuQ3Q4/Dg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-size: 62.2%;
+      }
+      /*reset code end*/
+      h1 {
+        text-align: center;
+        font-size: 3.5rem;
+      }
+      .posts {
+        width: 100%;
+        background-color: cornflowerblue;
+        display: flex;
+        padding: 2rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .post {
+        width: 23%;
+        margin: 0.5rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0.2);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        transition: all 0.4s;
+      }
+      .post:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0.2);
+      }
+      .post-title {
+        margin-bottom: 0.5rem;
+      }
+
+      @media screen and (max-width: 992px) {
+        .post {
+          width: 48%;
+        }
+      }
+      @media screen and (max-width: 600px) {
+        .post {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>posts</h1>
+    <div class="posts"></div>
+    <script>
+      // const dataa = [
+      //   {
+      //     title: "My name is Nisho 1",
+      //     body: "I am a programmer from bangladesh 1",
+      //   },
+      //   {
+      //     title: "My name is Nisho 2",
+      //     body: "I am a programmer from bangladesh 2",
+      //   },
+      //   {
+      //     title: "My name is Nisho 3",
+      //     body: "I am a programmer from bangladesh 3",
+      //   },
+      //   {
+      //     title: "My name is Nisho 4",
+      //     body: "I am a programmer from bangladesh 4",
+      //   },
+      // ];
+      const fetchData = async (config) => {
+        try {
+          const response = await axios(config);
+          return response.data;
+        } catch (error) {
+          throw Error("This error from server");
+        }
+      };
+      const postsElement = document.querySelector(".posts");
+      const allData = async () => {
+        const dataa = await fetchData(
+          " https://jsonplaceholder.typicode.com/posts/1/comments"
+        );
+        dataa.map((newData) => {
+          const postElement = document.createElement("div");
+          postElement.classList.add("post");
+          postElement.innerHTML = `<h3>${newData.email}</h3>
+                                    <p>${newData.body}</p>`;
+          postsElement.appendChild(postElement);
+        });
+      };
+      allData();
+    </script>
+  </body>
+</html>
