@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+      html {
+        font-size: 62.5%;
+      }
+      .container {
+        padding: 1rem;
+      }
+      main {
+        background-color: aqua;
+        width: 50%;
+      }
+      p {
+        margin: 1rem 0 1rem 0;
+      }
+      select {
+        margin: 0 0.7rem 0 0.5rem;
+      }
+      button {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- This is for text -->
+    <div class="container">
+      <label for="selectFontSize">Select font Size:</label>
+      <select name="selectFontSize" id="selectFontSize">
+        <option value="16px">16px</option>
+        <option value="18px">18px</option>
+        <option value="20px">20px</option>
+        <option value="22px">22px</option>
+      </select>
+      <!-- This is for color -->
+      <label for="selectColor">Select background-color:</label>
+      <select name="selectColor" id="selectColor">
+        <option value="aqua">aqua</option>
+        <option value="green">green</option>
+        <option value="orange">orange</option>
+        <option value="pink">pink</option>
+      </select>
+      <button type="submit" id="resetButton">Reset</button>
+
+      <main>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi
+          iure dolorem adipisci excepturi molestias quibusdam a. Reprehenderit
+          consequatur illum, similique velit cumque voluptas, dolor quod tempora
+          provident maxime, itaque necessitatibus.
+        </p>
+        <p>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Porro magni,
+          ipsam in fuga, impedit placeat neque itaque aliquid temporibus
+          obcaecati exercitationem praesentium, ea esse tempora.
+        </p>
+      </main>
+    </div>
+    <script>
+      const selectFontSize = document.getElementById("selectFontSize");
+      const selectColor = document.getElementById("selectColor");
+      const resetButton = document.getElementById("resetButton");
+      const mainElement = document.querySelector("main");
+
+      const setValues = (getFont, getColor) => {
+        selectFontSize.value = getFont;
+        selectColor.value = getColor;
+        mainElement.style.fontSize = getFont;
+        mainElement.style.backgroundColor = getColor;
+      };
+
+      //load localStorage value
+
+      const initialSetup = () => {
+        const getFont = localStorage.getItem("fontSize");
+        const getColor = localStorage.getItem("bgColor");
+
+        if (getFont && getColor) {
+          setValues(getFont, getColor);
+        }
+        if (!getFont && !getColor) {
+          setValues("16px", "aqua");
+        }
+        if (getFont && !getColor) {
+          setValues(getFont, "aqua");
+        }
+        if (!getFont && getColor) {
+          setValues("16px", getColor);
+        }
+      };
+
+      const changeFont = (event) => {
+        const localFont = event.target.value;
+        mainElement.style.fontSize = localFont;
+        localStorage.setItem("fontSize", localFont);
+      };
+
+      const changeColor = (event) => {
+        const localColor = event.target.value;
+        mainElement.style.backgroundColor = localColor;
+        localStorage.setItem("bgColor", localColor);
+      };
+
+      const localClear = () => {
+        localStorage.removeItem("fontSize");
+        localStorage.removeItem("bgColor");
+        setValues("16px", "aqua");
+      };
+
+      selectFontSize.addEventListener("change", changeFont);
+      selectColor.addEventListener("change", changeColor);
+      resetButton.addEventListener("click", localClear);
+
+      initialSetup();
+    </script>
+  </body>
+</html>

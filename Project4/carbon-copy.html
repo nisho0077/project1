@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+      text-decoration: none;
+    }
+    html {
+      font-size: 62.5%;
+    }
+    .container {
+      margin: 1.5rem;
+    }
+    select {
+      margin: 0 0.5rem 1rem 0.5rem;
+    }
+    main {
+      background-color: violet;
+      width: 70%;
+      padding: 0.5rem;
+      border: 1px solid darkgrey;
+    }
+    p {
+      margin: 0.5rem 0 0 0;
+    }
+    button {
+      cursor: pointer;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <label for="selectFont">Select Font:</label>
+      <!-- Selected Font -->
+      <select name="selectFont" id="selectFont">
+        <option value="16px">16px</option>
+        <option value="18px">18px</option>
+        <option value="22px">22px</option>
+      </select>
+      <!-- Selected bgColor -->
+      <label for="selectColor">Select Font:</label>
+      <select name="selectColor" id="selectColor">
+        <option value="coral">coral</option>
+        <option value="royalblue">royalblue</option>
+        <option value="deeppink">deeppink</option>
+      </select>
+      <button type="submit" id="clearButton">Reset</button>
+
+      <main>
+        <p>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis
+          iusto nobis nemo doloribus consequatur accusantium, at deserunt
+          exercitationem porro rerum voluptate doloremque reprehenderit vitae
+          maiores omnis? Quisquam sit molestiae exercitationem.
+        </p>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel
+          voluptatibus id ducimus maiores debitis quaerat commodi ipsam enim
+          quas a facere adipisci pariatur, voluptates mollitia ex eius aliquam
+          rerum inventore dolor error itaque ut facilis libero alias. Velit,
+          mollitia vel.
+        </p>
+      </main>
+    </div>
+    <script>
+      const selectFontSize = document.querySelector("#selectFont");
+      const selectColor = document.querySelector("#selectColor");
+      const mainElement = document.querySelector("main");
+      const clearButton = document.querySelector("#clearButton");
+
+      const setValues = (getFont, getColor) => {
+        selectFontSize.value = getFont;
+        selectColor.value = getColor;
+        mainElement.style.fontSize = getFont;
+        mainElement.style.backgroundColor = getColor;
+      };
+
+      const localGetStorage = () => {
+        const getFont = localStorage.getItem("font");
+        const getColor = localStorage.getItem("bgColor");
+
+        if (getFont && getColor) {
+          setValues(getFont, getColor);
+        }
+        if (!getFont && !getColor) {
+          setValues("16px", "coral");
+        }
+        if (getFont && !getColor) {
+          setValues(getFont, "coral");
+        }
+        if (!getFont && getColor) {
+          setValues("16px", getColor);
+        }
+      };
+
+      selectFontSize.addEventListener("change", (event) => {
+        const localFont = event.target.value;
+        mainElement.style.fontSize = localFont;
+        localStorage.setItem("font", localFont);
+      });
+
+      selectColor.addEventListener("change", (event) => {
+        const localColor = event.target.value;
+        mainElement.style.backgroundColor = localColor;
+        localStorage.setItem("bgColor", localColor);
+      });
+
+      clearButton.addEventListener("click", () => {
+        localStorage.removeItem("font");
+        localStorage.removeItem("bgColor");
+      });
+
+      localGetStorage();
+    </script>
+  </body>
+</html>
